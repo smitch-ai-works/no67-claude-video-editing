@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>すみっち式 Claudeで動画編集 完全マニュアル</title>
+<meta name="description" content="自分の声と素材で縦型リールを1本。Claude Codeへの編集・修正の指示文6本と、実際の修正例つき。">
+<style>
+:root{color-scheme:light;--ink:#2c211d;--paper:#fffaf5;--line:#e6d8ce;--accent:#9e432b;--muted:#6d5549}
+*{box-sizing:border-box}
+body{margin:0;background:#eae1d8;color:var(--ink);font-family:"Yu Gothic",Meiryo,sans-serif;line-height:1.75}
+main{max-width:840px;margin:auto;background:var(--paper)}
+img{display:block;width:100%;height:auto}
+p{margin:.65rem 0 1rem;overflow-wrap:anywhere}
+h1,h2,h3{line-height:1.42;overflow-wrap:anywhere}
+h1,h2{font-size:clamp(1.45rem,4.5vw,2.1rem);margin:.1em 0 .5em}
+h3{font-size:1.13rem;margin:0 0 .65rem}
+a{color:var(--accent);text-underline-offset:.18em}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #1169a6;outline-offset:3px}
+.hero{background:#1e130f}
+.hero img{max-width:540px;margin:auto}
+.content{padding:clamp(20px,5.7vw,48px)}
+.section{border-bottom:1px solid var(--line);padding:32px 0}
+.section:first-child{padding-top:0}
+.section:last-child{border:0;padding-bottom:0}
+.video{aspect-ratio:16/9;max-width:620px;margin:auto;border-radius:14px;background:#281b16;color:#f5e6db;display:grid;place-items:center;text-align:center;padding:1rem}
+.video p{margin:0}
+.intro{padding-top:36px}
+.voice{padding:14px 16px;margin:16px 0 18px;border-left:3px solid var(--accent);background:#f7e9df;font-weight:700}
+.steps,.jump,.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.jump{margin:16px 0 0;grid-template-columns:repeat(3,minmax(0,1fr))}
+.jump a{border:1px solid var(--line);border-radius:9px;padding:.7rem .55rem;display:grid;align-items:center;text-align:center;text-decoration:none;font-weight:700;background:#fff}
+.step{min-width:0;border:1px solid var(--line);border-radius:14px;background:#fff;padding:16px}
+.step p:last-child{margin-bottom:0}
+.stage{margin-top:4px}
+.num{color:var(--accent);font-variant-numeric:tabular-nums;font-size:.85em;margin-right:.45em}
+figure{margin:14px 0}
+figure img,.cta img{border-radius:12px}
+figcaption,.note{color:var(--muted);font-size:.87rem}
+figcaption{margin:.35rem 0 0}
+.pair figure{margin:0}
+.workflow{margin:.65rem 0 1rem;padding-left:1.25rem}
+.workflow li{margin:.35rem 0}
+.compare{padding:18px;background:#2d1d16;color:#fff3e9;border-radius:15px;margin:16px 0}
+.compare figcaption,.compare .note{color:#f0d3c0}
+.example{margin:15px 0;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.example p:last-child{margin-bottom:0}
+button,.button{border:1px solid var(--accent);background:var(--accent);color:white;font:inherit;font-weight:700;cursor:pointer;border-radius:9px;display:block;text-align:center;padding:11px 12px;text-decoration:none;width:100%;min-height:44px}
+.button.secondary{background:#fff;color:var(--accent)}
+.prompt{margin:14px 0}
+details{margin:.6rem 0 0}
+summary{cursor:pointer;font-weight:700}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.87rem;background:#f7efe9;border-radius:8px;padding:12px}
+.status:empty{display:none}
+.status{display:block;font-size:.88rem;color:var(--accent);margin-top:.5em}
+.cta{display:grid;gap:12px;margin-top:16px}
+code{font:inherit;font-weight:700}
+@media(max-width:580px){.steps{grid-template-columns:1fr}.section{padding:24px 0}.compare{padding:12px}.jump{gap:6px}.jump a{font-size:.84rem}}
+</style>
+</head>
+<body>
+<main>
+<div class="hero"><img src="assets/cover-v3.png" width="1080" height="1080" alt="すみっち式 Claudeで動画編集 完全マニュアル"></div>
+<div class="content">
+<section class="section">
+  <h2>解説動画</h2>
+  <div class="video"><p>実演動画は準備中です。</p></div>
+</section>
+<div class="cta top-guide"><a href="https://sub.aione.co.jp/line/open/Iu0m3ReMw97D?mtid=PxeHUC98TlGc" target="_blank" rel="noopener"><img src="assets/cta1.jpg" alt="AIマネタイズの教科書をLINEで受け取る" loading="lazy"></a></div>
+<section class="section intro">
+  <h1>自分の声から、<br>Claudeでリールを作る。</h1>
+  <p>カットと字幕に手が止まったら、お手本1本を渡して編集を任せてみてください。</p>
+  <div class="pair">
+    <figure><img src="assets/sample-open.jpg" alt="海沿いでPCを開くすみっち。Claudeで編集するリールの冒頭" loading="lazy"><figcaption>今回のリールの冒頭</figcaption></figure>
+    <figure><img src="assets/sample-reference.jpg" alt="参考動画を複数のフレームに分けて見せた場面" loading="lazy"><figcaption>お手本をコマに分解</figcaption></figure>
+  </div>
+  <p class="voice">僕はセリフの間と、話したことが画面で伝わるかを見ます。OKした間と動きは次回にも残します。</p>
+  <nav class="jump" aria-label="手順">
+    <a href="#setup">作業の準備</a><a href="#test">試す・分析</a><a href="#finish">編集と修正</a>
+  </nav>
+</section>
+<section class="section" id="setup">
+  <h2>アプリとフォルダを用意</h2>
+  <div class="steps stage">
+    <div class="step">
+      <h3><span class="num">1</span>ClaudeのCodeを開く</h3>
+      <p>PCにClaudeを入れ、ログインして「Code」を開きます。</p>
+      <a class="button" href="https://claude.com/download" target="_blank" rel="noopener">Claude公式ダウンロード</a>
+    </div>
+    <div class="step">
+      <h3><span class="num">2</span>フォルダを3つに分ける</h3>
+      <figure><img src="assets/folders.jpg" alt="リール編集の中に素材・完成・ナレッジの3フォルダ" loading="lazy"><figcaption>リール編集フォルダの中身</figcaption></figure>
+      <p><strong>この3つを「リール編集」の中に作ります。</p>
+    </div>
+  </div>
+  <div class="example">
+    <h3><span class="num">3</span>Codeに作業先を渡す</h3>
+    <p>新規チャットで「ローカル」を選び、「リール編集」を指定します。</p>
+    <div class="prompt">
+  <button type="button" data-copy="check" aria-label="作業フォルダを確認するための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="check">このチャットで開いた「リール編集」フォルダを確認してください。
+直下の「素材」「完成」「ナレッジ」の有無と、「素材」に入っているファイル名を教えてください。
+3つのフォルダのうち無いものだけ作ってください。既存ファイルは削除・上書き・移動しないでください。</pre>
+    <a href="downloads/check.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+    <a href="https://code.claude.com/docs/en/desktop#start-a-session" target="_blank" rel="noopener">画面が違うときは公式の操作手順へ</a>
+  </div>
+</section>
+<section class="section" id="test">
+  <h2>5秒試して、お手本を渡す</h2>
+  <div class="steps stage">
+    <div class="step">
+      <h3><span class="num">4</span>テスト動画を開く</h3>
+      <p>短い動画を「素材」へ。<code>完成/テスト.mp4</code>を開き、尺・字幕・縦型表示を確認。</p>
+      <div class="prompt">
+  <button type="button" data-copy="tools" aria-label="5秒のテスト動画を作るための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="tools">「リール編集」フォルダで、縦型リールを作る準備をしてください。
+FFmpegとPython、日本語が表示できるフォントを使えるか確認してください。追加で必要なものがあれば、名前・公式の入手先・用途を説明し、僕のOKを待ってください。
+「素材」にある動画のうち1本を選んでファイル名を示し、約5秒にカットして「テスト」という日本語字幕を重ね、「完成/テスト.mp4」に書き出してください。仕様は縦1080×1920です。
+元動画は変更せず、同名のテスト動画があれば別名で保存してください。書き出した場所を教えてください。</pre>
+    <a href="downloads/tools.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+    </div>
+    <div class="step">
+      <h3><span class="num">5</span>お手本を編集ルールにする</h3>
+      <p>「素材」にお手本を入れ、指示文にファイル名を記入。できた<code>編集ルール.md</code>を開きます。</p>
+      <div class="prompt">
+  <button type="button" data-copy="study" aria-label="お手本から編集ルールを作るための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="study">「素材」フォルダにある【お手本のファイル名】を、今回のリールのお手本として分析してください。
+冒頭・本題・締めから代表的な場面を選び、時刻つきで次を表にしてください。
+・カット間隔、声の文と文の間
+・字幕の位置、サイズ、色、縁取り
+・画面に何が出て、セリフに合わせてどう変わるか
+・どの動きで、何の効果音が鳴るか
+境目は前後のフレームも見て、判断できない数値には「未確認」と書いてください。分かる範囲で画面の寸法や時刻を測ってください。
+「ナレッジ/編集ルール.md」に「お手本から読み取ったこと」として残してください。既存の確定ルールは上書きしないでください。</pre>
+    <a href="downloads/study.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+    </div>
+  </div>
+  <figure><img src="assets/knowledge.jpg" alt="字幕サイズ、再生速度、文間、声と効果音の設定を記録した編集ルール" loading="lazy"><figcaption>すみっちの編集ルール</figcaption></figure>
+</section>
+<section class="section" id="finish">
+  <h2><span class="num">6</span>自分の声と素材で1本作る</h2>
+  <p>声と動画を「素材」へ。指示の【　】を埋め、「完成」のMP4を通して再生します。</p>
+  <div class="prompt">
+  <button type="button" data-copy="edit" aria-label="自分の素材で1本作るための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="edit">「ナレッジ/編集ルール.md」を読み、「素材」にある【自分の声のファイル名】と【使う動画素材のファイル名】で縦型リールを1本作ってください。「素材」にある【お手本のファイル名】は分析用です。
+・採用するテイクを選び、言い直しと不要な間を詰め、語頭・語尾を残す。
+・お手本の画面構成と展開を参考に、セリフごとに何を見せるか、どう動くか、何の音を合わせるかを決める。
+・字幕と画面の変化を該当する発話に合わせる。完成前に、各場面に同じ説明が重なっていないか確かめる。
+・BGMは【後で自分で付ける／使用する音源名と入れ方】に従う。
+「完成」に縦1080×1920のMP4を別名で保存してください。元素材はそのままにして、保存先と冒頭・中盤・締めの編集判断を短く教えてください。</pre>
+    <a href="downloads/edit.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+  <h3>「テンポが悪い」を、直せる指示にする</h3>
+  <div class="example">
+    <p><strong>間</strong>　「語尾を残して、文と文の空白を詰めて」</p>
+    <p>文間の中央値 <strong>0.20秒 → 0.08秒</strong></p>
+  </div>
+  <div class="compare">
+    <h3>「昨日寝た時間」を打つ場面に</h3>
+    <div class="pair">
+      <figure><img src="assets/sample-before.jpg" alt="修正前のリール。マニュアル表紙の下に時計と寝顔の絵文字" loading="lazy"><figcaption>修正前　時計と寝顔</figcaption></figure>
+      <figure><img src="assets/sample-comment.jpg" alt="修正版のリール。コメント欄に深夜2時と入力した再現画面" loading="lazy"><figcaption>修正後　コメントを入力</figcaption></figure>
+    </div>
+    <details><summary>そのあと、DMに届く場面を見る</summary>
+      <figure><img src="assets/sample-dm.jpg" alt="修正版のリール。DMに同じマニュアルの表紙が届く再現画面" loading="lazy"><figcaption>動画内の再現演出</figcaption></figure>
+    </details>
+  </div>
+  <p>「『深夜2時』をコメントして、DMに表紙が届くところまで見せて」</p>
+  <div class="prompt">
+  <button type="button" data-copy="fix" aria-label="時刻を指定して修正するための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="fix">「完成」フォルダの【直す動画のファイル名】を修正してください。
+修正箇所：【時刻とセリフ】
+変更内容：【今どう見える／聞こえるか → こう変えてほしい】
+同じ種類の問題がほかの場面にもあれば、該当する時刻を挙げて同じ基準で見直してください。変更する範囲と終わりの見え方を確認し、修正版を「完成」に別名で保存してください。
+直した箇所と確認方法を教えてください。編集ルールへの確定は、僕が修正版を確認してOKしてからです。</pre>
+    <a href="downloads/fix.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+  <p>修正版を再生し、OKした間・字幕・動きを<code>編集ルール.md</code>へ。次の編集でも最初に読ませます。</p>
+  <div class="prompt">
+  <button type="button" data-copy="keep" aria-label="確認したルールを残すための指示文をコピー">指示文をコピー</button>
+  <details><summary>指示文を見る</summary>
+    <pre id="keep">確認した【OKを出した動画のファイル名】から、次回にも使う編集判断を「ナレッジ/編集ルール.md」に追記してください。
+字幕の位置・サイズ・色、声の間、声や効果音の設定は、測定値または実際に使った値を単位つきで書いてください。確認できない値は未確認としてください。
+動きは「どの言葉で、何が出て、どう変わり、どこまで残すか」を書いてください。今回だけの指定は「この動画だけ」に分けてください。
+最後に、保存先・追記したルールを読み返し、次のチャットで作業を頼むときに最初に渡すファイル名を教えてください。</pre>
+    <a href="downloads/keep.txt" download>この指示文を保存</a>
+  </details>
+  <span class="status" role="status"></span>
+</div>
+  <a class="button secondary" href="downloads/prompts.zip" download>指示文6本をまとめて保存</a>
+</section>
+<section class="section">
+  <h2>1本できたら、次は何を発信するか。</h2>
+  <p>誰のどんな悩みを解決するか。何を伝えて、見た人にどう動いてほしいか。僕は先にここを決めます。</p>
+  <p>投稿ネタに迷う会社員に、職場でよく聞かれる質問を投稿にする方法を見せ、下書きを1本書いてもらう。</p>
+  <p>こうした発信を集客や収益につなげる考え方は、『AIマネタイズの教科書』にまとめています。</p>
+  <div class="cta"><a href="https://sub.aione.co.jp/line/open/Iu0m3ReMw97D?mtid=PxeHUC98TlGc" target="_blank" rel="noopener"><img src="assets/cta2.jpg" alt="AIマネタイズの教科書をLINEで受け取る" loading="lazy"></a><a href="https://sub.aione.co.jp/line/open/Iu0m3ReMw97D?mtid=PxeHUC98TlGc" target="_blank" rel="noopener"><img src="assets/cta3.jpg" alt="AIマネタイズの教科書をLINEで受け取る" loading="lazy"></a></div>
+</section>
+</div>
+</main>
+<script>
+document.querySelectorAll('[data-copy]').forEach(button => {
+  button.addEventListener('click', async () => {
+    const container = button.closest('.prompt');
+    const status = container.querySelector('.status');
+    const value = document.getElementById(button.dataset.copy).textContent + '\n';
+    try {
+      await navigator.clipboard.writeText(value);
+      status.textContent = 'コピーしました';
+    } catch {
+      container.querySelector('details').open = true;
+      status.textContent = '以下の全文を選択してコピーするか、TXTを保存してください。';
+    }
+  });
+});
+</script>
+</body>
+</html>
